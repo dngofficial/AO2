@@ -1,8 +1,12 @@
 package calculator.model;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Calculator {
 
     private String current_string;
+    private String second_backup_string;
+
     private OperationState state;
     public Calculator(){
         this.current_string = "0";
@@ -20,19 +24,23 @@ public class Calculator {
         return this.current_string;
     }
 
+
+
     // Accessed by View. You should edit this method as you build functionality
     public double displayNumber() {
         // TODO
+        this.current_string = removeExtraDecimalPoints(this.current_string);
         return Double.parseDouble(this.current_string);
     }
 
     public void clearPressed() {
-        // TODO
+        this.state = null;
+        this.current_string = "0";
     }
 
     public void numberPressed(int number) {
         this.current_string += String.valueOf(number);
-        displayNumber();
+        //displayNumber();
         // TODO
 
     }
@@ -71,14 +79,24 @@ public class Calculator {
         // TODO
         String solutionString = this.state.doOperation(Double.parseDouble(this.current_string));
         this.current_string = solutionString;
-        System.out.println(this.current_string);
+        this.state = new EqualState(Double.parseDouble(solutionString), this.state.getState());
+        //this.state.setFirstNumber(Double.parseDouble(this.current_string));
+
 
 
     }
 
     public void decimalPressed() {
         // TODO
+        this.current_string += ".";
     }
+
+    public static String removeExtraDecimalPoints(String input) {
+        Pattern pattern = Pattern.compile("(?<=\\d)(\\.)(?=.*\\1)|(?<=\\d)\\.(?=[^\\d])");
+        Matcher matcher = pattern.matcher(input);
+        return matcher.replaceAll("");
+    }
+
 
 
 }

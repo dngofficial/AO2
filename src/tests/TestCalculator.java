@@ -18,7 +18,8 @@ public class TestCalculator {
     @Test
     public void test0Calculator()
     {
-        assertTrue(calculator.displayNumber() == 0.0);
+        assertEquals(calculator.displayNumber(), 0.0, 0.001);
+
     }
 
     @Test
@@ -36,9 +37,7 @@ public class TestCalculator {
         calculator.numberPressed(2);
         calculator.numberPressed(5);
         calculator.dividePressed();
-        System.out.println(calculator.getState().getFirst_number());
         calculator.numberPressed(5);
-        System.out.println(calculator.getCurrentString());
 
         calculator.equalsPressed();
 
@@ -72,6 +71,65 @@ public class TestCalculator {
         calculator.equalsPressed();
 
         assertEquals(calculator.displayNumber(), 14.0, 0.001);
+    }
+
+    @Test
+    public void clearTest() {
+        calculator.numberPressed(3);
+        calculator.addPressed();
+        calculator.numberPressed(4);
+        calculator.equalsPressed();
+        calculator.clearPressed();
+
+        assertEquals(calculator.displayNumber(), 0.0, 0.001);
+    }
+
+    @Test
+    public void decimalAppendTest() {
+        calculator.decimalPressed();
+        calculator.numberPressed(5);
+        assertEquals(calculator.displayNumber(), 0.5, 0.001);
+    }
+
+    @Test
+    public void equalsOverRepeating() {
+        calculator.numberPressed(8);
+        calculator.numberPressed(0);
+        calculator.subtractPressed();
+        calculator.numberPressed(1);
+        calculator.numberPressed(0);
+        calculator.equalsPressed();
+        calculator.equalsPressed();
+        calculator.equalsPressed();
+        calculator.equalsPressed();
+        assertEquals(calculator.displayNumber(), 40.0, 0.001);
+    }
+
+    @Test
+    public void mutipleDecimal() {
+        calculator.numberPressed(1);
+        calculator.numberPressed(2);
+        calculator.decimalPressed();
+        calculator.decimalPressed();
+        calculator.numberPressed(5);
+        calculator.decimalPressed();
+        calculator.decimalPressed();
+        calculator.numberPressed(0);
+        calculator.decimalPressed();
+        calculator.numberPressed(5);
+        System.out.println(calculator.getCurrentString());
+        System.out.println(Calculator.removeExtraDecimalPoints(calculator.getCurrentString()));
+
+        assertEquals(calculator.displayNumber(), 12.505, 0.001);
+
+
+
+
+
+
+
+
+
     }
 
 
