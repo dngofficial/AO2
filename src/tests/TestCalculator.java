@@ -117,22 +117,7 @@ public class TestCalculator {
         calculator.numberPressed(0);
         calculator.decimalPressed();
         calculator.numberPressed(5);
-        System.out.println(calculator.getCurrentString());
-        System.out.println(Calculator.removeExtraDecimalPoints(calculator.getCurrentString()));
 
         assertEquals(calculator.displayNumber(), 12.505, 0.001);
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
     }
